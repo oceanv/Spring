@@ -16,6 +16,8 @@
         <!-- 指定文件编译的版本 -->
         <maven.compiler.source>1.7</maven.compiler.source>
         <maven.compiler.target>1.7</maven.compiler.target>
+        <spring.version>4.3.10.RELEASE</spring.version>
+        <log4j.version>2.8.2</log4j.version>
     </properties>
 
     <!-- 配置项目发布仓库 -->
@@ -33,6 +35,45 @@
     </distributionManagement>
 
     <dependencies>
+        <!-- spring framework JDK 6+ for Spring Framework 4.x -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
+        <!-- spring-test -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>${spring.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Log4j2 2.4 and greater requires Java 7 -->
+        <!-- log4j-core -->
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>${log4j.version}</version>
+        </dependency>
+        <!-- log4j-api -->
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <version>${log4j.version}</version>
+        </dependency>
+        <!-- log4j-jcl 连接common-log -->
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-jcl</artifactId>
+            <version>${log4j.version}</version>
+        </dependency>
+
+
+
+
+
         <!-- junit -->
         <dependency>
             <groupId>junit</groupId>

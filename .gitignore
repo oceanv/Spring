@@ -1,6 +1,7 @@
 # Project Config
 Spring.iml
 .idea/
+target/
 
 # Compiled class file
 *.class
