@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util" xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+<!-- Hello Word -->
+    <!--
+        配置 bean
+        class : bean 的全类名，通过反射的方式在IOC容器中创建Bean，所有要求Bean中必须有无参的构造器
+        id: 在ioc中必须是唯一的；如果没有指定，自动将限定性类名作为id;Id可以指定多个，它们之间通过逗号，分号或空格分隔
+     -->
+    <bean id="helloWord" class="com.hai.a_helloword.HelloWord">
+        <property name="name" value="Spring"/>
+    </bean>
+
+
+<!-- Bean的初始化 -->
+    <!-- 静态工厂方法
+        class属性：指向静态工厂方法的全类名
+        factory-method:指向静态工厂方法的名称
+        constructor-arg:如果工厂方法需要传入参数，使用constructor-arg来配置参数
+    -->
+    <bean id="entryStaticFactory" class="com.hai.b_iocXml.a_bean.StaticFactory" factory-method="getEntry">
+        <constructor-arg value="entry1"/>
+    </bean>
+
+    <!-- 实例工厂方法 -->
+    <bean id="instanceFactory" class="com.hai.b_iocXml.a_bean.InstanceFactory"/>
+    <bean id="entryInstanceFactory" factory-bean="instanceFactory" factory-method="getEntry">
+        <constructor-arg value="entry2"/>
+    </bean>
+
+    <!-- Spring Factory Bean 配置
+         class:指向Factory Bean的全类名
+         property：配置Factory Bean的属性
+         但实际返回的实例却是Factory Bean的getObject方法返回的实例
+    -->
+    <bean id="entryFactoryBean" class="com.hai.b_iocXml.a_bean.SpringFactoryBean">
+        <property name="name" value="factory bean"/>
+    </bean>
+
+
+<!-- 属性注入 -->
+    <!-- set 注入 -->
+    <bean id="setterInjectionProperty" class="com.hai.b_iocXml.a_property.SetterInjectionProperty">
+        <!-- 声明属性，调用setName方法进行初始化属性 -->
+        <property name="property" value="属性值"/>
+    </bean>
+
+    <!-- 构造器注入 -->
+    <bean id="constructorInjectionProperty1" class="com.hai.b_iocXml.a_property.ConstructorInjectionProperty">
+        <constructor-arg value="constructorInjectionProperty" />
+    </bean>
+
+    <bean id="constructorInjectionProperty2" class="com.hai.b_iocXml.a_property.ConstructorInjectionProperty">
+        <!-- 参数传递的顺序，不写默认是从上往下递增 -->
+        <constructor-arg index="1" value="2" />
+        <constructor-arg index="0" value="constructorInjectionProperty" />
+    </bean>
+
+    <bean id="constructorInjectionProperty3" class="com.hai.b_iocXml.a_property.ConstructorInjectionProperty">
+        <!-- 解决可以同时赋值的歧义
+            ConstructorInjectionProperty(String property, int intVal)
+            ConstructorInjectionProperty(String property, double doubleVal)
+         -->
+        <constructor-arg index="0" type="java.lang.String" value="constructorInjectionProperty"/>
+        <constructor-arg index="1" value="2" type="int"/>
+    </bean>
+
+<!-- 值注入 -->
+    <bean id="entry" class="com.hai.b_iocXml.Entry">
+        <property name="name" value="entry name"/>
+    </bean>
+
+    <bean id="injectionValue1" class="com.hai.b_iocXml.b_value.InjectionValue">
+        <!-- String中包含特殊字符 -->
+        <property name="str">
+            <!-- 处理字符串中包含特殊字符的情况 -->
+            <value><![CDATA[<shanghai^>]]></value>  <!--赋值的字符串值为<shanghai^>-->
+        </property>
+    </bean>
+
+    <bean id="injectionValue2" class="com.hai.b_iocXml.b_value.InjectionValue">
+        <!-- 引用的Bean类 -->
+        <property name="entry" ref="entry"/>
+    </bean>
+
+    <bean id="injectionValue3" class="com.hai.b_iocXml.b_value.InjectionValue">
+        <!-- 使用内部Bean -->
+        <property name="entry">
+            <bean class="com.hai.b_iocXml.Entry">
+                <constructor-arg value="bean entry"/>
+            </bean>
+        </property>
+    </bean>
+
+    <bean id="injectionValue4" class="com.hai.b_iocXml.b_value.InjectionValue">
+        <!-- 赋值为null -->
+        <property name="str">
+            <null/>
+        </property>
+    </bean>
+
+    <!-- list集合 -->
+    <bean id="injectionValue5" class="com.hai.b_iocXml.b_value.InjectionValue">
+        <property name="list">
+            <list>
+                <ref bean="entry"/>
+                <bean class="com.hai.b_iocXml.Entry">
+                    <constructor-arg value="name1"/>
+                </bean>
+                <null/>
+            </list>
+        </property>
+    </bean>
+
+    <!-- map集合 -->
+    <bean id="injectionValue6" class="com.hai.b_iocXml.b_value.InjectionValue">
+        <property name="map">
+            <map>
+                <entry key="key1" value-ref="entry"/>
+                <entry key="key2">
+                    <bean class="com.hai.b_iocXml.Entry">
+                        <constructor-arg value="name2"/>
+                    </bean>
+                </entry>
+                <entry key="key3">
+                    <null/>
+                </entry>
+                <entry>
+                    <key>
+                        <bean class="java.lang.String" >
+                            <constructor-arg type="java.lang.String" value="name2"/>
+                        </bean>
+                    </key>
+                    <null/>
+                </entry>
+
+            </map>
+        </property>
+    </bean>
+
+
+    <!-- Properties集合 -->
+    <bean id="injectionValue7" class="com.hai.b_iocXml.b_value.InjectionValue">
+        <property name="properties">
+            <props>
+                <prop key="key">value</prop>
+                <prop key="user">ocean</prop>
+            </props>
+        </property>
+    </bean>
+
+    <!-- 全局配置list集合 -->
+    <util:list id="list">
+        <ref bean="entry"/>
+        <bean class="com.hai.b_iocXml.Entry">
+            <property name="name" value="name"/>
+        </bean>
+    </util:list>
+    <bean id="injectionValue8" class="com.hai.b_iocXml.b_value.InjectionValue">
+        <property name="list" ref="list"/>
+    </bean>
+
+
+    <!-- 全局配置map集合 -->
+    <util:map id="map">
+        <entry key="key1" value-ref="entry"/>
+    </util:map>
+    <bean id="injectionValue9" class="com.hai.b_iocXml.b_value.InjectionValue">
+        <property name="map" ref="map"/>
+    </bean>
+
+    <!-- 全局配置Properties集合 -->
+    <util:properties id="properties">
+        <prop key="key">value</prop>
+        <prop key="user">ocean</prop>
+    </util:properties>
+    <bean id="injectionValue10" class="com.hai.b_iocXml.b_value.InjectionValue">
+        <property name="properties" ref="properties"/>
+    </bean>
+
+    <!-- 通过p命名空间为bean赋值-->
+    <bean id="injectionValue11" class="com.hai.b_iocXml.b_value.InjectionValue"
+        p:entry-ref="entry" p:list-ref="list" p:map-ref="map" p:properties="name=hai passwd=root">
+    </bean>
+
+<!-- 自动装配 -->
+    <bean id="autoWire" class="com.hai.b_iocXml.c_autowire.AutoWire">
+        <property name="str" value="auto wire"/>
+        <property name="entry" >
+            <bean class="com.hai.b_iocXml.Entry">
+                <property name="name" value="entry name"/>
+            </bean>
+        </property>
+    </bean>
+    <!-- 可以使用autowire属性指定自动装配的方式 -->
+    <bean id="str" class="java.lang.String">
+        <constructor-arg value="string"/>
+    </bean>
+
+    <!-- byName根据bean的名字和当前setter 风格的属性名进行自动装配，若有匹配的则进行装配，若没有匹配的，则不装配。
+    <bean id="autoWire1" class="com.hai.b_iocXml.c_autowire.AutoWire" autowire="byName"/>
+    -->
+
+    <!-- byType根据bean的类型和当前bean的属性的类型进行自动装配, 当IOC容器中，存在多个类型匹配则抛出异常
+    <bean id="autoWire2" class="com.hai.b_iocXml.c_autowire.AutoWire" autowire="byType"/>
+    -->
+
+<!-- bean之间的关系 -->
+    <!-- 继承 -->
+    <bean id="relation"  abstract="true">
+        <property name="string" value="string"/>
+        <property name="entry" ref="entry"/>
+    </bean>
+    <bean id="relation1" class="com.hai.b_iocXml.d_relation.Relation" parent="relation">
+        <property name="string" value="child bean"/>
+    </bean>
+
+    <!-- 依赖关系 -->
+    <bean id="relation2" class="com.hai.b_iocXml.d_relation.Relation" depends-on="entry,str">
+        <property name="string" ref="str"/>
+        <property name="entry" ref="entry"/>
+    </bean>
+
+<!-- Bean的作用域 -->
+    <!-- 单例 scope="singleton" 默认 -->
+    <bean id="scope1" class="com.hai.b_iocXml.e_scope.Scope" >
+        <property name="name" value="scope1"/>
+        <property name="entry" ref="entry" />
+    </bean>
+
+    <!-- 非单例 -->
+    <bean id="scope2" class="com.hai.b_iocXml.e_scope.Scope" scope="prototype">
+        <property name="name" value="scope2"/>
+        <property name="entry" ref="entry" />
+    </bean>
+</beans>

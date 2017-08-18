@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+<!-- SpEl -->
+    <!-- 字面量 -->
+    <bean id="spelLiteral" class="com.hai.c_spel.Literal">
+        <property name="intVal" value="#{12}"/>
+        <property name="floatVal" value="#{89.7}"/>
+        <property name="doubleVal" value="#{1e4}"/>
+        <property name="string" value="#{'string'}"/>
+        <property name="boolVal" value="#{false}"/>
+    </bean>
+
+    <!-- 关联 -->
+    <bean id="entry" class="com.hai.b_iocXml.Entry">
+        <property name="name" value="entry_name"/>
+    </bean>
+
+    <bean id="spelRelation" class="com.hai.c_spel.Relation">
+        <property name="entry" value="#{entry}"/>
+        <property name="entryName" value="#{entry.name}"/>
+        <property name="entryMethod" value="#{entry.toString()}"/>
+        <property name="entryMethodLink" value="#{entry.toString().toUpperCase()}"/>
+    </bean>
+
+    <!-- 运算 -->
+    <bean id="spelOperator" class="com.hai.c_spel.Operator">
+        <!-- + - * / % ^ -->
+        <property name="add"            value="#{23 + 2}"/>
+        <property name="subtract"       value="#{23 -2}"/>
+            <!-- 调用静态方法或静态属性T() -->
+        <property name="multiply"       value="#{2 * T(java.lang.Math).PI}"/>
+        <property name="divide"         value="#{20 / 10}"/>
+        <property name="mod"         value="#{20 % 3}"/>
+        <property name="power"          value="#{2 ^ 2}"/>
+
+        <!-- + -->
+        <property name="addStr"         value="#{'ocean ' + ' hai'}"/>
+
+        <!--  (>, >=, ==) lt, gt, eq, le, ge(推荐使用字母表示) -->
+        <property name="eq"             value="#{2 eq 3}"/>
+        <property name="gt"             value="#{3 gt 2}"/>
+        <property name="lt"             value="#{3 lt 2}"/>
+        <property name="ge"             value="#{2 ge 4}"/>
+        <property name="le"             value="#{3 le 2}"/>
+
+        <!-- and or not || -->
+        <property name="and" value="#{true and true}"/>
+        <property name="or" value="#{true or false }"/>
+        <property name="not" value="#{not false }"/>
+        <property name="or2" value="#{false || true}"/>
+
+
+        <!-- if else -->
+        <property name="ifElse" value="#{true ? 'true' : 'false'}"/>
+        <property name="ifElse2" value="#{null ?: 'true'}"/>
+
+        <!-- matches -->
+        <property name="matches" value="#{'oceanv@163.com' matches '[a-zA-Z0-9._%+-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]{2,4}'}"/>
+
+    </bean>
+
+</beans>

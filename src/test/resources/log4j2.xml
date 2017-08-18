@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration>
-    <Properties>
-        <Property name="ProjectName">app</Property>
-    </Properties>
-
     <Appenders>
         <!-- 控制台输出所有 -->
         <Console name="Console" target="SYSTEM_OUT" >
@@ -11,127 +7,12 @@
                 <Pattern>%highlight{%d{yyyy-MM-dd HH:mm:ss} [Thread: %t][Class:%c >> Method: %l]%n%-5p:%m%n}</Pattern>
             </PatternLayout>
         </Console>
-
-        <!-- TRACE级别
-        <RollingRandomAccessFile name="TraceFile" fileName="logs/trace/${ProjectName}-trace.log"
-                                 filePattern="logs/trace/$${date:yyyy-MM}/${ProjectName}-trace-%d{yyyy-MM-dd}-%i.log">
-            <PatternLayout>
-                <Pattern>%d{yyyy-MM-dd HH:mm:ss} [Thread: %t][Class:%c >> Method: %l]%n%-5p:%m%n</Pattern>
-            </PatternLayout>
-
-            <Policies>
-                <TimeBasedTriggeringPolicy modulate="true" interval="1"/>
-                <SizeBasedTriggeringPolicy size="50 MB"/>
-            </Policies>
-
-            <Filters>
-                <ThresholdFilter level="TRACE" onMatch="ACCEPT" onMismatch="DENY"/>
-            </Filters>
-        </RollingRandomAccessFile>
-        -->
-
-        <!-- DEBUG级别
-        <RollingRandomAccessFile name="DebugFile" fileName="logs/debug/${ProjectName}-debug.log"
-                                 filePattern="logs/debug/$${date:yyyy-MM}/${ProjectName}-debug-%d{yyyy-MM-dd}-%i.log">
-            <PatternLayout>
-                <Pattern>%d{yyyy-MM-dd HH:mm:ss} [Thread: %t][Class:%c >> Method: %l]%n%-5p:%m%n</Pattern>
-            </PatternLayout>
-
-            <Policies>
-                <TimeBasedTriggeringPolicy modulate="true" interval="1"/>
-                <SizeBasedTriggeringPolicy size="50 MB"/>
-            </Policies>
-
-            <Filters>
-                <ThresholdFilter level="DEBUG" onMatch="ACCEPT" onMismatch="DENY"/>
-            </Filters>
-        </RollingRandomAccessFile>
-        -->
-
-        <!-- INFO级别
-        <RollingRandomAccessFile name="InfoFile" fileName="logs/info/${ProjectName}-info.log"
-                                 filePattern="logs/info/$${date:yyyy-MM}/${ProjectName}-info-%d{yyyy-MM-dd}-%i.log">
-            <PatternLayout>
-                <Pattern>%d{yyyy-MM-dd HH:mm:ss} [Thread: %t][Class:%c >> Method: %l]%n%-5p:%m%n</Pattern>
-            </PatternLayout>
-
-            <Policies>
-                <TimeBasedTriggeringPolicy modulate="true" interval="1"/>
-                <SizeBasedTriggeringPolicy size="50 MB"/>
-            </Policies>
-
-            <Filters>
-                <ThresholdFilter level="INFO" onMatch="ACCEPT" onMismatch="DENY"/>
-            </Filters>
-        </RollingRandomAccessFile>
-        -->
-
-        <!-- WARN级别
-        <RollingRandomAccessFile name="WarnFile" fileName="logs/warn/${ProjectName}-warn.log"
-                                 filePattern="logs/warn/$${date:yyyy-MM}/${ProjectName}-warn-%d{yyyy-MM-dd}-%i.log">
-            <PatternLayout>
-                <Pattern>%d{yyyy-MM-dd HH:mm:ss} [Thread: %t][Class:%c >> Method: %l]%n%-5p:%m%n</Pattern>
-            </PatternLayout>
-
-            <Policies>
-                <TimeBasedTriggeringPolicy modulate="true" interval="1"/>
-                <SizeBasedTriggeringPolicy size="50 MB"/>
-            </Policies>
-
-            <Filters>
-                <ThresholdFilter level="WARN" onMatch="ACCEPT" onMismatch="DENY"/>
-            </Filters>
-        </RollingRandomAccessFile>
-        -->
-
-        <!-- ERROR级别
-        <RollingRandomAccessFile name="ErrorFile" fileName="logs/error/${ProjectName}-error.log"
-                                 filePattern="logs/error/$${date:yyyy-MM}/${ProjectName}-error-%d{yyyy-MM-dd}-%i.log">
-            <PatternLayout>
-                <Pattern>%d{yyyy-MM-dd HH:mm:ss} [Thread: %t][Class:%c >> Method: %l]%n%-5p:%m%n</Pattern>
-            </PatternLayout>
-
-            <Policies>
-                <TimeBasedTriggeringPolicy modulate="true" interval="1"/>
-                <SizeBasedTriggeringPolicy size="50 MB"/>
-            </Policies>
-
-            <Filters>
-                <ThresholdFilter level="ERROR" onMatch="ACCEPT" onMismatch="DENY"/>
-            </Filters>
-        </RollingRandomAccessFile>
-        -->
-
-
-        <!-- FATAL级别
-        <RollingRandomAccessFile name="FatalFile" fileName="logs/fatal/${ProjectName}-fatal.log"
-                                 filePattern="logs/fatal/$${date:yyyy-MM}/${ProjectName}-fatal-%d{yyyy-MM-dd}-%i.log">
-            <PatternLayout>
-                <Pattern>%d{yyyy-MM-dd HH:mm:ss} [Thread: %t][Class:%c >> Method: %l]%n%-5p:%m%n</Pattern>
-            </PatternLayout>
-
-            <Policies>
-                <TimeBasedTriggeringPolicy modulate="true" interval="1"/>
-                <SizeBasedTriggeringPolicy size="50 MB"/>
-            </Policies>
-
-            <Filters>
-                <ThresholdFilter level="FATAL" onMatch="ACCEPT" onMismatch="DENY"/>
-            </Filters>
-        </RollingRandomAccessFile>
-        -->
     </Appenders>
 
     <Loggers>
-        <Root level="trace">
+        <!-- 根目录级别 -->
+        <Root level="Warn">
             <AppenderRef ref="Console"/>
-            <!--
-            <AppenderRef ref="TraceFile"/>
-            <AppenderRef ref="DebugFile"/>
-            <AppenderRef ref="InfoFile"/>
-            <AppenderRef ref="ErrorFile"/>
-            <AppenderRef ref="FatalFile"/>
-            -->
         </Root>
     </Loggers>
 </Configuration>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!-- 配置注解扫描包目录 -->
+    <context:component-scan base-package="com.hai.e_iocAnnotation"/>
+
+    <!-- 配置bean筛选模式
+    <context:component-scan base-package="com.hai.e_iocAnnotation" resource-pattern="a_beans/model/*.class"/>
+    -->
+
+    <!-- 指定去除哪些bean(annotation)
+    <context:component-scan base-package="com.hai.e_iocAnnotation">
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Repository"/>
+    </context:component-scan>
+    -->
+
+    <!-- 指定仅仅包含哪些bean(annotation)
+    <context:component-scan base-package="com.hai.e_iocAnnotation" use-default-filters="false">
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Repository"/>
+    </context:component-scan>
+     -->
+
+    <!-- 指定去除哪些bean(annotation)
+    <context:component-scan base-package="com.hai.e_iocAnnotation">
+        <context:exclude-filter type="assignable" expression="com.hai.e_iocAnnotation.a_beans.dao.inter.CarDao"/>
+    </context:component-scan>
+    -->
+
+    <!-- 指定仅仅包含哪些bean(annotation)
+    <context:component-scan base-package="com.hai.e_iocAnnotation" use-default-filters="false">
+        <context:include-filter type="assignable" expression="com.hai.e_iocAnnotation.a_beans.dao.inter.CarDao"/>
+    </context:component-scan>
+    -->
+</beans>
